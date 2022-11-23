@@ -479,7 +479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114015623498811666, guid: d2790e271f1a64347bb2ede5601b1e23, type: 3}
       propertyPath: filterMode
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114015623498811666, guid: d2790e271f1a64347bb2ede5601b1e23, type: 3}
       propertyPath: textureBinding.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -555,7 +555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114866818567473902, guid: d2790e271f1a64347bb2ede5601b1e23, type: 3}
       propertyPath: DeviceConfiguration.Profiles.Array.data[0].Format
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114866818567473902, guid: d2790e271f1a64347bb2ede5601b1e23, type: 3}
       propertyPath: DeviceConfiguration.Profiles.Array.data[0].Height
@@ -563,18 +563,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114866818567473902, guid: d2790e271f1a64347bb2ede5601b1e23, type: 3}
       propertyPath: DeviceConfiguration.Profiles.Array.data[0].Stream
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114866818567473902, guid: d2790e271f1a64347bb2ede5601b1e23, type: 3}
-      propertyPath: DeviceConfiguration.Profiles.Array.data[1].Format
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114866818567473902, guid: d2790e271f1a64347bb2ede5601b1e23, type: 3}
-      propertyPath: DeviceConfiguration.Profiles.Array.data[1].Height
-      value: 720
-      objectReference: {fileID: 0}
-    - target: {fileID: 114866818567473902, guid: d2790e271f1a64347bb2ede5601b1e23, type: 3}
-      propertyPath: DeviceConfiguration.Profiles.Array.data[1].Stream
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114866818567473902, guid: d2790e271f1a64347bb2ede5601b1e23, type: 3}
