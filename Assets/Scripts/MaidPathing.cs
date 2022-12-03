@@ -11,6 +11,9 @@ public class MaidPathing : MonoBehaviour
     public float standingDuration;
     public float minDistanceToObj = 0.2f;
 
+    public GameObject cdTimer;
+    [SerializeField] ScreenshotCompanion screenshot;
+
     private enum Phase
     {
         WALK_UP, STAND, WALK_BACK, OVER
@@ -62,10 +65,14 @@ public class MaidPathing : MonoBehaviour
 
     private void StandingPhase()
     {
+        if (!cdTimer.activeInHierarchy) cdTimer.SetActive(true);
+
         transform.LookAt(new Vector3(mainCamera.transform.position.x, transform.position.y, mainCamera.transform.position.z));
         remainingStandDuration -= Time.deltaTime;
         if (remainingStandDuration <= 0f)
         {
+            if (cdTimer.activeInHierarchy) cdTimer.SetActive(false);
+            screenshot.CaptureScreenshots(0, false);
             currentPhase = Phase.WALK_BACK;
         }
     }

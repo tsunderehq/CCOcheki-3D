@@ -18,8 +18,6 @@ public class CountdownTimer : MonoBehaviour
     
     void Update()
     {
-        transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime*2);
-
         currentTime -= 1 * Time.deltaTime;
 
         if (startingTime - currentTime >= 1)
@@ -30,10 +28,11 @@ public class CountdownTimer : MonoBehaviour
             countdownText.text = currentTime.ToString("0");
         }
 
+        transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime * 2);
 
-        if (currentTime <= 0)
+        if (currentTime < 0f)
         {
-            this.gameObject.SetActive(false);
+            countdownText.text = " ";
         }
     }
 }
