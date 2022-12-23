@@ -12,6 +12,8 @@ public class MaidPathing : MonoBehaviour
     public GameObject ParentCanvas, CountTimerGO;
     [SerializeField] ScreenshotCompanion screenshot;
 
+    private Flash _flash;
+
     private enum Phase
     {
         WALK_UP, STAND, WALK_BACK, IDLE
@@ -26,6 +28,8 @@ public class MaidPathing : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         SetMovingAnimation();
         currentPhase = Phase.IDLE; // start with IDLE
+
+        _flash = FindObjectOfType<Flash>();
     }
 
     private void Update()
@@ -63,7 +67,7 @@ public class MaidPathing : MonoBehaviour
         GameObject cdTimerInstance = Instantiate(CountTimerGO) as GameObject;
         cdTimerInstance.transform.SetParent(ParentCanvas.transform, false);
 
-        transform.LookAt(new Vector3(mainCamera.transform.position.x, transform.position.y, mainCamera.transform.position.z));
+        //transform.LookAt(new Vector3(mainCamera.transform.position.x, transform.position.y, mainCamera.transform.position.z));
     }
 
     private void WalkBackPhase()
@@ -92,6 +96,7 @@ public class MaidPathing : MonoBehaviour
     public void CountDownEnd()
     {
         screenshot.CaptureScreenshots(0, false);
+        _flash.DoCameraFlash = true;
         currentPhase = Phase.WALK_BACK;
     }
 }
