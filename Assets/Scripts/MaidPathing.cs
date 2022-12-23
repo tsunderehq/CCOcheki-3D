@@ -4,38 +4,34 @@ using UnityEngine;
 
 public class MaidPathing : MonoBehaviour
 {
-
     public Camera mainCamera;
     public Transform destinationPosition;
     public float moveSpeed;
-    public float standingDuration;
     public float minDistanceToObj = 0.2f;
 
-    public GameObject cdTimer;
+    public GameObject ParentCanvas, CountTimerGO;
     [SerializeField] ScreenshotCompanion screenshot;
 
     private enum Phase
     {
-        WALK_UP, STAND, WALK_BACK, OVER
+        WALK_UP, STAND, WALK_BACK, IDLE
     }
     private Phase currentPhase;
-    private float remainingStandDuration;
     Vector3 sourcePosition;
     Animator playerAnimator;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         sourcePosition = gameObject.transform.position;
         playerAnimator = GetComponent<Animator>();
         SetMovingAnimation();
-        currentPhase = Phase.WALK_UP; // we start with walking up
-        remainingStandDuration = standingDuration;
+        currentPhase = Phase.IDLE; // start with IDLE
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        // press Enter to start
+        if (currentPhase == Phase.IDLE && Input.GetKeyDown(KeyCode.Return)) currentPhase = Phase.WALK_UP;
 
         switch (currentPhase)
         {
@@ -57,7 +53,6 @@ public class MaidPathing : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, destinationPosition.position, Time.deltaTime * moveSpeed);
         if (Vector3.Distance(destinationPosition.position, transform.position) < minDistanceToObj)
         {
-            Debug.Log("Reached destination");
             setStandingAnimation(); // we stop moving
             currentPhase = Phase.STAND;
         }
@@ -65,26 +60,19 @@ public class MaidPathing : MonoBehaviour
 
     private void StandingPhase()
     {
-        if (!cdTimer.activeInHierarchy) cdTimer.SetActive(true);
+        GameObject cdTimerInstance = Instantiate(CountTimerGO) as GameObject;
+        cdTimerInstance.transform.SetParent(ParentCanvas.transform, false);
 
         transform.LookAt(new Vector3(mainCamera.transform.position.x, transform.position.y, mainCamera.transform.position.z));
-        remainingStandDuration -= Time.deltaTime;
-        if (remainingStandDuration <= 0f)
-        {
-            if (cdTimer.activeInHierarchy) cdTimer.SetActive(false);
-            screenshot.CaptureScreenshots(0, false);
-            currentPhase = Phase.WALK_BACK;
-        }
     }
 
     private void WalkBackPhase()
     {
         SetMovingAnimation();
         transform.position = Vector3.MoveTowards(transform.position, sourcePosition, Time.deltaTime * moveSpeed);
-        if (Vector3.Distance(destinationPosition.position, transform.position) < minDistanceToObj)
+        if (Vector3.Distance(sourcePosition, transform.position) < minDistanceToObj)
         {
-            Debug.Log("Reached destination");
-            currentPhase = Phase.STAND;
+            currentPhase = Phase.IDLE;
         }
     }
 
@@ -99,5 +87,11 @@ public class MaidPathing : MonoBehaviour
     private void setStandingAnimation()
     {
         playerAnimator.SetBool("Walking", false);
+    }
+
+    public void CountDownEnd()
+    {
+        screenshot.CaptureScreenshots(0, false);
+        currentPhase = Phase.WALK_BACK;
     }
 }

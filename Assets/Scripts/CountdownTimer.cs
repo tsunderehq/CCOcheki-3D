@@ -10,13 +10,34 @@ public class CountdownTimer : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI countdownText;
 
-    void Start()
+    private MaidPathing _maidPathing;
+
+    private static CountdownTimer _instance;
+    public static CountdownTimer Instance
     {
+        get { return _instance; }
+        set
+        {
+            if (_instance == null)
+            {
+                _instance = value;
+            }
+            else
+            {
+                Destroy(value.gameObject);
+            }
+        }
+    }
+    private void Awake()
+    {
+        Instance = this;
+
+        _maidPathing = FindObjectOfType<MaidPathing>();
         currentTime = startingTime;
     }
 
     
-    void Update()
+    private void Update()
     {
         currentTime -= 1 * Time.deltaTime;
 
@@ -32,7 +53,8 @@ public class CountdownTimer : MonoBehaviour
 
         if (currentTime < 0f)
         {
-            countdownText.text = " ";
+            _maidPathing.CountDownEnd();
+            Destroy(gameObject);
         }
     }
 }
