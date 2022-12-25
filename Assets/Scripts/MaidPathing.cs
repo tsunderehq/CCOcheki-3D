@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MaidPathing : MonoBehaviour
 {
     public Camera mainCamera;
+    
     public Transform destinationPosition;
+
+    public RawImage ScreenshotAnimator;
+    public Animator screenShotAnimator;
+
     public float moveSpeed;
     public float minDistanceToObj = 0.2f;
 
@@ -13,7 +19,7 @@ public class MaidPathing : MonoBehaviour
     [SerializeField] ScreenshotCompanion screenshot;
 
     private Flash _flash;
-
+    
     private enum Phase
     {
         WALK_UP, STAND, WALK_BACK, IDLE
@@ -28,7 +34,6 @@ public class MaidPathing : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         SetMovingAnimation();
         currentPhase = Phase.IDLE; // start with IDLE
-
         _flash = FindObjectOfType<Flash>();
     }
 
@@ -95,7 +100,11 @@ public class MaidPathing : MonoBehaviour
 
     public void CountDownEnd()
     {
-        screenshot.CaptureScreenshots(0, false);
+        Texture2D screenshotData = screenshot.CaptureRenderTexture(mainCamera, 0);
+        screenshotData.Apply();
+        ScreenshotAnimator.texture = (Texture)screenshotData;
+        
+        screenShotAnimator.SetTrigger("Screenshot");
         _flash.DoCameraFlash = true;
         currentPhase = Phase.WALK_BACK;
     }
