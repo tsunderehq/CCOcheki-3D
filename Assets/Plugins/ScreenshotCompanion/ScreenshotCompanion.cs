@@ -310,7 +310,7 @@ public class ScreenshotCompanion : MonoBehaviour
     }
 
     // create a sharp screenshot for a single Camera
-    public void CaptureRenderTexture(Camera attachedCam, int id)
+    public Texture2D CaptureRenderTexture(Camera attachedCam, int id)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -341,6 +341,8 @@ public class ScreenshotCompanion : MonoBehaviour
         Debug.Log("Screenshot saved to: " + fileName);
 
         postCapture();
+
+        return screenShot;
     }
 
     public string getFileName(int camID)
