@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class CountdownTimer : MonoBehaviour
 {
     private float currentTime = 0f;
-    private float startingTime = 3f;
+    private float startingTime = 6f;
 
     [SerializeField] TextMeshProUGUI countdownText;
 
-    private MaidPathing _maidPathing;
+    private ChekiLogic _chekiLogic;
 
     private static CountdownTimer _instance;
     public static CountdownTimer Instance
@@ -32,7 +30,7 @@ public class CountdownTimer : MonoBehaviour
     {
         Instance = this;
 
-        _maidPathing = FindObjectOfType<MaidPathing>();
+        _chekiLogic = FindObjectOfType<ChekiLogic>();
         currentTime = startingTime;
     }
 
@@ -53,7 +51,7 @@ public class CountdownTimer : MonoBehaviour
 
         if (currentTime < 0f)
         {
-            _maidPathing.CountDownEnd();
+            _chekiLogic.CountDownEnd();
             Destroy(gameObject);
         }
     }
