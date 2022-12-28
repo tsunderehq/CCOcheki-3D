@@ -14,9 +14,9 @@ public class ChekiLogic : MonoBehaviour
     public GameObject ParentCanvas, CountTimerGO;
 
     //for returning manaka to original transform after animation
-    public Transform Anim1, Anim2, Anim3;
-    private Vector3 Anim1Pos, Anim2Pos, Anim3Pos;
-    private Quaternion Anim1Rot, Anim2Rot, Anim3Rot;
+    public Transform Anim1, Anim2, Anim3, Hima1, Hima2;
+    private Vector3 Anim1Pos, Anim2Pos, Anim3Pos, Hima1Pos, Hima2Pos;
+    private Quaternion Anim1Rot, Anim2Rot, Anim3Rot, Hima1Rot, Hima2Rot;
 
     //camera flash effect
     private Flash _flash;
@@ -38,10 +38,14 @@ public class ChekiLogic : MonoBehaviour
         //only take input when in Idle mode
         if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || playerAnimator.IsInTransition(0)) return;
 
-        //press 1, 2, or 3 to trigger animation
+        //press 1, 2, or 3 to trigger cheki animations
         if (Input.GetKeyDown(KeyCode.Alpha1)) DoBigHeartAnimation();
         if (Input.GetKeyDown(KeyCode.Alpha2)) DoSmallHeartAnimation();
         if (Input.GetKeyDown(KeyCode.Alpha3)) DoNyanAnimation();
+
+        //press 9, 0 to trigger standby animations
+        if (Input.GetKeyDown(KeyCode.Alpha9)) DoHima1Animation();
+        if (Input.GetKeyDown(KeyCode.Alpha0)) DoHima2Animation();
     }
 
     private void DoBigHeartAnimation()
@@ -68,6 +72,20 @@ public class ChekiLogic : MonoBehaviour
         StartCountDown();
     }
 
+    private void DoHima1Animation()
+    {
+        gameObject.transform.position = Hima1Pos;
+        gameObject.transform.rotation = Hima1Rot;
+        playerAnimator.SetTrigger("Hima1");
+    }
+
+    private void DoHima2Animation()
+    {
+        gameObject.transform.position = Hima2Pos;
+        gameObject.transform.rotation = Hima2Rot;
+        playerAnimator.SetTrigger("Hima2");
+    }
+
     private void StartCountDown()
     {
         GameObject cdTimerInstance = Instantiate(CountTimerGO) as GameObject;
@@ -84,6 +102,12 @@ public class ChekiLogic : MonoBehaviour
 
         Anim3Pos = Anim3.position;
         Anim3Rot = Anim3.rotation;
+
+        Hima1Pos = Hima1.position;
+        Hima1Rot = Hima1.rotation;
+
+        Hima2Pos = Hima2.position;
+        Hima2Rot = Hima2.rotation;
     }
 
     public void CountDownEnd()
