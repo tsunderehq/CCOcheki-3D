@@ -14,100 +14,94 @@ public class ChekiLogic : MonoBehaviour
     public GameObject ParentCanvas, CountTimerGO;
 
     //for returning manaka to original transform after animation
-    public Transform Anim1, Anim2, Anim3, Hima1, Hima2;
-    private Vector3 Anim1Pos, Anim2Pos, Anim3Pos, Hima1Pos, Hima2Pos;
-    private Quaternion Anim1Rot, Anim2Rot, Anim3Rot, Hima1Rot, Hima2Rot;
+    public Transform Anim1, Anim2, Anim3, Hima;
 
     //camera flash effect
     private Flash _flash;
 
     //for controlling Manaka animator logic
     private Animator playerAnimator;
-    
+
 
     private void Start()
     {
         playerAnimator = GetComponent<Animator>();
         _flash = FindObjectOfType<Flash>();
-
-        InitializeAnimationTransforms();
     }
 
     private void Update()
     {
-        //only take input when in Idle mode
-        if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || playerAnimator.IsInTransition(0)) return;
+        if (Input.GetKeyDown(KeyCode.Alpha0)) playerAnimator.Play("Waiting");
+        if (Input.GetKeyDown(KeyCode.Alpha9)) playerAnimator.Play("Idle");
 
-        //press 1, 2, or 3 to trigger cheki animations
-        if (Input.GetKeyDown(KeyCode.Alpha1)) DoBigHeartAnimation();
-        if (Input.GetKeyDown(KeyCode.Alpha2)) DoSmallHeartAnimation();
-        if (Input.GetKeyDown(KeyCode.Alpha3)) DoNyanAnimation();
+        // reset the Waiting start transform every finished loop
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Waiting"))
+        {
+            gameObject.transform.position = Hima.position;
+            gameObject.transform.rotation = Hima.rotation;
 
-        //press 9, 0 to trigger standby animations
-        if (Input.GetKeyDown(KeyCode.Alpha9)) DoHima1Animation();
-        if (Input.GetKeyDown(KeyCode.Alpha0)) DoHima2Animation();
+            // randomize between the two hima animations
+            if (Random.value > 0.5f) playerAnimator.SetBool("Hima", true);
+            else playerAnimator.SetBool("Hima", false);
+        }
+
+        // wait for trigger cheki animation
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            //dont interrupt when in cheki animation
+            if (playerAnimator.IsInTransition(0)) return;
+
+            //press 1, 2, or 3 to trigger cheki animations
+            if (Input.GetKeyDown(KeyCode.Alpha1)) DoBigHeartAnimation();
+            if (Input.GetKeyDown(KeyCode.Alpha2)) DoSmallHeartAnimation();
+            if (Input.GetKeyDown(KeyCode.Alpha3)) DoNyanAnimation();
+        }
+    }
+
+    private void SetWaiting(bool isWaiting)
+    {
+        if (isWaiting)
+        {
+            gameObject.transform.position = Hima.position;
+            gameObject.transform.rotation = Hima.rotation;
+            playerAnimator.Play("Waiting");
+        }
+        else
+        {
+            gameObject.transform.position = Anim1.position;
+            gameObject.transform.rotation = Anim1.rotation;
+            playerAnimator.Play("Idle");
+        }
     }
 
     private void DoBigHeartAnimation()
     {
-        gameObject.transform.position = Anim1Pos;
-        gameObject.transform.rotation = Anim1Rot;
+        gameObject.transform.position = Anim1.position;
+        gameObject.transform.rotation = Anim1.rotation;
         playerAnimator.SetTrigger("BigHeart");
         StartCountDown();
     }
 
     private void DoSmallHeartAnimation()
     {
-        gameObject.transform.position = Anim2Pos;
-        gameObject.transform.rotation = Anim2Rot;
+        gameObject.transform.position = Anim2.position;
+        gameObject.transform.rotation = Anim2.rotation;
         playerAnimator.SetTrigger("SmallHeart");
         StartCountDown();
     }
 
     private void DoNyanAnimation()
     {
-        gameObject.transform.position = Anim3Pos;
-        gameObject.transform.rotation = Anim3Rot;
+        gameObject.transform.position = Anim3.position;
+        gameObject.transform.rotation = Anim3.rotation;
         playerAnimator.SetTrigger("Nyan");
         StartCountDown();
-    }
-
-    private void DoHima1Animation()
-    {
-        gameObject.transform.position = Hima1Pos;
-        gameObject.transform.rotation = Hima1Rot;
-        playerAnimator.SetTrigger("Hima1");
-    }
-
-    private void DoHima2Animation()
-    {
-        gameObject.transform.position = Hima2Pos;
-        gameObject.transform.rotation = Hima2Rot;
-        playerAnimator.SetTrigger("Hima2");
     }
 
     private void StartCountDown()
     {
         GameObject cdTimerInstance = Instantiate(CountTimerGO) as GameObject;
         cdTimerInstance.transform.SetParent(ParentCanvas.transform, false);
-    }
-
-    private void InitializeAnimationTransforms()
-    {
-        Anim1Pos = Anim1.position;
-        Anim1Rot = Anim1.rotation;
-
-        Anim2Pos = Anim2.position;
-        Anim2Rot = Anim2.rotation;
-
-        Anim3Pos = Anim3.position;
-        Anim3Rot = Anim3.rotation;
-
-        Hima1Pos = Hima1.position;
-        Hima1Rot = Hima1.rotation;
-
-        Hima2Pos = Hima2.position;
-        Hima2Rot = Hima2.rotation;
     }
 
     public void CountDownEnd()

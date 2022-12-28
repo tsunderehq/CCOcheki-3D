@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 350607604}
   - component: {fileID: 350607603}
   m_Layer: 0
-  m_Name: TsundeCheki
+  m_Name: TsundeChekiText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -529,7 +529,6 @@ Transform:
   - {fileID: 1963078561}
   - {fileID: 926776860}
   - {fileID: 1732630864}
-  - {fileID: 2087631222}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -762,7 +761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1421940970626846, guid: d2790e271f1a64347bb2ede5601b1e23, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1509775526359626, guid: d2790e271f1a64347bb2ede5601b1e23, type: 3}
       propertyPath: m_IsActive
@@ -1009,7 +1008,7 @@ GameObject:
   - component: {fileID: 1236932648}
   - component: {fileID: 1236932647}
   m_Layer: 5
-  m_Name: TsundeCheki
+  m_Name: TsundeChekiText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1225,7 +1224,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1194601629348710, guid: 88101aaad380d2446b34d5110becbc5f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4669229571324224, guid: 88101aaad380d2446b34d5110becbc5f, type: 3}
       propertyPath: m_RootOrder
@@ -1438,15 +1437,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3107515652771731725, guid: be8dda500d3e4425cb26cb5e55cc5737, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.738
+      value: -0.9
       objectReference: {fileID: 0}
     - target: {fileID: 3107515652771731725, guid: be8dda500d3e4425cb26cb5e55cc5737, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.91
+      value: -0.55
       objectReference: {fileID: 0}
     - target: {fileID: 3107515652771731725, guid: be8dda500d3e4425cb26cb5e55cc5737, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.3
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 3107515652771731725, guid: be8dda500d3e4425cb26cb5e55cc5737, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1466,7 +1465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3107515652771731725, guid: be8dda500d3e4425cb26cb5e55cc5737, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3107515652771731725, guid: be8dda500d3e4425cb26cb5e55cc5737, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1474,11 +1473,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3107515652771731725, guid: be8dda500d3e4425cb26cb5e55cc5737, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3107515652771731725, guid: be8dda500d3e4425cb26cb5e55cc5737, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5383690356193662307, guid: be8dda500d3e4425cb26cb5e55cc5737, type: 3}
       propertyPath: m_DirtyAABB
@@ -1572,8 +1571,7 @@ MonoBehaviour:
   Anim1: {fileID: 1622284468}
   Anim2: {fileID: 1963078561}
   Anim3: {fileID: 926776860}
-  Hima1: {fileID: 1732630864}
-  Hima2: {fileID: 2087631222}
+  Hima: {fileID: 1732630864}
 --- !u!1 &1732630863
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,7 +1582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1732630864}
   m_Layer: 0
-  m_Name: Hima1
+  m_Name: Hima
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1598,7 +1596,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732630863}
   m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
-  m_LocalPosition: {x: -0.738, y: -0.6, z: 1.3}
+  m_LocalPosition: {x: -0.9, y: -0.55, z: 0.8}
   m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1835,9 +1833,9 @@ MonoBehaviour:
     customFileName: Komike
     includeProject: 0
     includeCamera: 0
-    includeDate: 0
+    includeDate: 1
     includeResolution: 0
-    includeCounter: 1
+    includeCounter: 0
     counter: 0
     fileType: 0
     applicationPath: 1
@@ -1903,7 +1901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6809654300850259974, guid: eae86697fad50cc4a9b37dc39b174f14, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.10000004
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6809654300850259974, guid: eae86697fad50cc4a9b37dc39b174f14, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2089,37 +2087,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 416119775}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2087631221
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2087631222}
-  m_Layer: 0
-  m_Name: Hima2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2087631222
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087631221}
-  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
-  m_LocalPosition: {x: -0.738, y: -0.6, z: 1.3}
-  m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 416119775}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2133302826
 GameObject:
