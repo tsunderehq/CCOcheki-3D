@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,11 @@ public class ChekiLogic : MonoBehaviour
     //for controlling Manaka animator logic
     private Animator playerAnimator;
 
+    private bool countdownStarted = false; //prevent double countdown
+
+    private const float smallHeartStopTime = 6f;
+    private const float bigHeartStopTime = 5.8f;
+    private const float nyanStopTime = 6.5f;
 
     private void Start()
     {
@@ -56,6 +62,9 @@ public class ChekiLogic : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha2)) DoSmallHeartAnimation();
             if (Input.GetKeyDown(KeyCode.Alpha3)) DoNyanAnimation();
         }
+
+        //start countdown if 4 is pressed
+        if (!countdownStarted && Input.GetKeyDown(KeyCode.Alpha4)) StartCountDown();
     }
 
     private void SetWaiting(bool isWaiting)
@@ -79,7 +88,8 @@ public class ChekiLogic : MonoBehaviour
         gameObject.transform.position = Anim1.position;
         gameObject.transform.rotation = Anim1.rotation;
         playerAnimator.SetTrigger("BigHeart");
-        StartCountDown();
+        StartCoroutine(PauseAnimatorCoroutine(bigHeartStopTime));
+        //StartCountDown();
     }
 
     private void DoSmallHeartAnimation()
@@ -87,7 +97,8 @@ public class ChekiLogic : MonoBehaviour
         gameObject.transform.position = Anim2.position;
         gameObject.transform.rotation = Anim2.rotation;
         playerAnimator.SetTrigger("SmallHeart");
-        StartCountDown();
+        StartCoroutine(PauseAnimatorCoroutine(smallHeartStopTime));
+        //StartCountDown();
     }
 
     private void DoNyanAnimation()
@@ -95,22 +106,32 @@ public class ChekiLogic : MonoBehaviour
         gameObject.transform.position = Anim3.position;
         gameObject.transform.rotation = Anim3.rotation;
         playerAnimator.SetTrigger("Nyan");
-        StartCountDown();
+        StartCoroutine(PauseAnimatorCoroutine(nyanStopTime));
+        //StartCountDown();
     }
 
     private void StartCountDown()
     {
+        countdownStarted = true;
         GameObject cdTimerInstance = Instantiate(CountTimerGO) as GameObject;
         cdTimerInstance.transform.SetParent(ParentCanvas.transform, false);
     }
 
     public void CountDownEnd()
     {
+        countdownStarted = false;
         Texture2D screenshotData = screenshot.CaptureRenderTexture(mainCamera, 0);
         screenshotData.Apply();
         ScreenshotAnimator.texture = (Texture)screenshotData;
         
         screenShotAnimator.SetTrigger("Screenshot");
         _flash.DoCameraFlash = true;
+        playerAnimator.speed = 1; //we continue the animation
+    }
+
+    IEnumerator PauseAnimatorCoroutine(float countdown)
+    {
+        yield return new WaitForSeconds(countdown);
+        playerAnimator.speed = 0;
     }
 }

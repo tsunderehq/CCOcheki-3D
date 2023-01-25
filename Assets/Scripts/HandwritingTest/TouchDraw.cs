@@ -40,52 +40,53 @@ public class TouchDraw : MonoBehaviour
     }
 
     AnimationData animationData;
-
+    public bool loadMode = true;
 
     void Update()
-    {/*
-        if (!recording)
+    {
+        if (loadMode)
         {
-            LoadJSONFont();
-            WriteTextWrapper(startingPosition.position);
-            recording = true;
-        }*/
+            if (!recording)
+            {
+                LoadJSONFont();
+                WriteTextWrapper(startingPosition.position);
+                recording = true;
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown("a"))
+            {
+                Debug.Log("Starting drawing");
+                recording = true;
 
+            }
+            if (Input.GetKeyDown("b"))
+            {
+                recording = false;
+                Debug.Log("Ending drawing");
+                FinishLine();
+            }
 
+            if (recording && Input.GetMouseButtonDown(0))
+            {
+                if (EventSystem.current.currentSelectedGameObject == null)
+                {
+                    StartLine();
+                }
+            }
 
-        if (Input.GetKeyDown("a"))
-       {
-           Debug.Log("Starting drawing");
-           recording = true;
-
-       }
-       if (Input.GetKeyDown("b"))
-       {
-           recording = false;
-           Debug.Log("Ending drawing");
-           FinishLine();
-       }
-
-       if (recording && Input.GetMouseButtonDown(0))
-       {
-           if (EventSystem.current.currentSelectedGameObject == null)
-           {
-               StartLine();
-           }
-       }
-
-       if (recording && Input.GetMouseButtonUp(0))
-       {
-           if (drawing != null)
-           {
-               StopCoroutine(drawing);
-           }
-       }
-
-
-
+            if (recording && Input.GetMouseButtonUp(0))
+            {
+                if (drawing != null)
+                {
+                    StopCoroutine(drawing);
+                }
+            }
+        }
 
     }
+
     public void StartLine()
     {
         if (drawing != null)
@@ -165,15 +166,16 @@ public class TouchDraw : MonoBehaviour
         foreach(Line line in animationData.lines)
         {
             GameObject newLineGameObject = Instantiate(linePrefab, startingPosition, Quaternion.identity);
+            newLineGameObject.transform.rotation = Quaternion.Euler(0, 180, 90);
             LineRenderer lineRenderer = newLineGameObject.GetComponent<LineRenderer>();
             lineRenderer.positionCount = 0;
-            lineRenderer.widthMultiplier = 1f;
+            lineRenderer.widthMultiplier = 0.1f;
             int pointIndex = 0;
 
             while (pointIndex < line.line.Length)
             {
                 lineRenderer.positionCount++;
-                lineRenderer.SetPosition(pointIndex, line.line[pointIndex] * scale);
+                lineRenderer.SetPosition(pointIndex, line.line[pointIndex] * scale /*Vector3.Scale(line.line[pointIndex], new Vector3(scale, scale, 0))*/);
                 pointIndex++;
                 yield return null;
             }
