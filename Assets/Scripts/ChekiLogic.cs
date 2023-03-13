@@ -7,12 +7,12 @@ public class ChekiLogic : MonoBehaviour
     public Camera mainCamera;
 
     //for screenshot function
-    [SerializeField] ScreenshotCompanion screenshot;
-    public RawImage ScreenshotAnimator;
-    public Animator screenShotAnimator;
+    [SerializeField] private ScreenshotCompanion screenshot;
+    [SerializeField] private RawImage ScreenshotAnimator;
+    [SerializeField] private Animator screenShotAnimator;
 
     //UI gameobjects
-    public GameObject ParentCanvas, CountTimerGO;
+    public GameObject ParentCanvas, CountTimePrefab;
 
     //for returning manaka to original transform after animation
     public Transform Anim1, Anim2, Anim3, Hima;
@@ -20,8 +20,11 @@ public class ChekiLogic : MonoBehaviour
     //camera flash effect
     private Flash _flash;
 
-    //for controlling Manaka animator logic
-    private Animator playerAnimator;
+    //for switching between Manaka and Kaguya
+    [SerializeField] private GameObject ManakaAvatar, KaguyaAvatar;
+    private GameObject CurrentAvatar;
+    private Animator currentAnimator, manakaAnimator, kaguyaAnimator;
+
 
     private bool countdownStarted = false; //prevent double countdown
 
@@ -31,31 +34,35 @@ public class ChekiLogic : MonoBehaviour
 
     private void Start()
     {
-        playerAnimator = GetComponent<Animator>();
+        manakaAnimator = ManakaAvatar.GetComponent<Animator>();
+        kaguyaAnimator = KaguyaAvatar.GetComponent<Animator>();
+
+        SetKaguyaAvatar();
+
         _flash = FindObjectOfType<Flash>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0)) playerAnimator.Play("Waiting");
-        if (Input.GetKeyDown(KeyCode.Alpha9)) playerAnimator.Play("Idle");
+        if (Input.GetKeyDown(KeyCode.Alpha0)) currentAnimator.Play("Waiting");
+        if (Input.GetKeyDown(KeyCode.Alpha9)) currentAnimator.Play("Idle");
 
         // reset the Waiting start transform every finished loop
-        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Waiting"))
+        if (currentAnimator.GetCurrentAnimatorStateInfo(0).IsName("Waiting"))
         {
-            gameObject.transform.position = Hima.position;
-            gameObject.transform.rotation = Hima.rotation;
+            CurrentAvatar.transform.position = Hima.position;
+            CurrentAvatar.transform.rotation = Hima.rotation;
 
             // randomize between the two hima animations
-            if (Random.value > 0.5f) playerAnimator.SetBool("Hima", true);
-            else playerAnimator.SetBool("Hima", false);
+            if (Random.value > 0.5f) currentAnimator.SetBool("Hima", true);
+            else currentAnimator.SetBool("Hima", false);
         }
 
         // wait for trigger cheki animation
-        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if (currentAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             //dont interrupt when in cheki animation
-            if (playerAnimator.IsInTransition(0)) return;
+            if (currentAnimator.IsInTransition(0)) return;
 
             //press 1, 2, or 3 to trigger cheki animations
             if (Input.GetKeyDown(KeyCode.Alpha1)) DoBigHeartAnimation();
@@ -67,45 +74,64 @@ public class ChekiLogic : MonoBehaviour
         if (!countdownStarted && Input.GetKeyDown(KeyCode.Alpha4)) StartCountDown();
     }
 
+    public void SetManakaAvatar()
+    {
+        KaguyaAvatar.SetActive(false);
+        ManakaAvatar.SetActive(true);
+
+        CurrentAvatar = ManakaAvatar;
+        currentAnimator = manakaAnimator;
+    }
+
+    public void SetKaguyaAvatar()
+    {
+        ManakaAvatar.SetActive(false);
+        KaguyaAvatar.SetActive(true);
+
+        CurrentAvatar = KaguyaAvatar;
+        currentAnimator = kaguyaAnimator;
+    }
+
+
     private void SetWaiting(bool isWaiting)
     {
         if (isWaiting)
         {
-            gameObject.transform.position = Hima.position;
-            gameObject.transform.rotation = Hima.rotation;
-            playerAnimator.Play("Waiting");
+            CurrentAvatar.transform.position = Hima.position;
+            CurrentAvatar.transform.rotation = Hima.rotation;
+            currentAnimator.Play("Waiting");
         }
         else
         {
-            gameObject.transform.position = Anim1.position;
-            gameObject.transform.rotation = Anim1.rotation;
-            playerAnimator.Play("Idle");
+            CurrentAvatar.transform.position = Anim1.position;
+            CurrentAvatar.transform.rotation = Anim1.rotation;
+            currentAnimator.Play("Idle");
         }
     }
 
     private void DoBigHeartAnimation()
     {
-        gameObject.transform.position = Anim1.position;
-        gameObject.transform.rotation = Anim1.rotation;
-        playerAnimator.SetTrigger("BigHeart");
+        CurrentAvatar.transform.position = Anim1.position;
+        CurrentAvatar.transform.rotation = Anim1.rotation;
+        currentAnimator.SetTrigger("BigHeart");
         StartCoroutine(PauseAnimatorCoroutine(bigHeartStopTime));
         //StartCountDown();
     }
 
     private void DoSmallHeartAnimation()
     {
-        gameObject.transform.position = Anim2.position;
-        gameObject.transform.rotation = Anim2.rotation;
-        playerAnimator.SetTrigger("SmallHeart");
+        CurrentAvatar.transform.position = Anim2.position;
+        CurrentAvatar.transform.rotation = Anim2.rotation;
+        currentAnimator.SetTrigger("SmallHeart");
         StartCoroutine(PauseAnimatorCoroutine(smallHeartStopTime));
         //StartCountDown();
     }
 
     private void DoNyanAnimation()
     {
-        gameObject.transform.position = Anim3.position;
-        gameObject.transform.rotation = Anim3.rotation;
-        playerAnimator.SetTrigger("Nyan");
+        CurrentAvatar.transform.position = Anim3.position;
+        CurrentAvatar.transform.rotation = Anim3.rotation;
+        currentAnimator.SetTrigger("Nyan");
         StartCoroutine(PauseAnimatorCoroutine(nyanStopTime));
         //StartCountDown();
     }
@@ -113,7 +139,7 @@ public class ChekiLogic : MonoBehaviour
     private void StartCountDown()
     {
         countdownStarted = true;
-        GameObject cdTimerInstance = Instantiate(CountTimerGO) as GameObject;
+        GameObject cdTimerInstance = Instantiate(CountTimePrefab) as GameObject;
         cdTimerInstance.transform.SetParent(ParentCanvas.transform, false);
     }
 
@@ -126,12 +152,12 @@ public class ChekiLogic : MonoBehaviour
         
         screenShotAnimator.SetTrigger("Screenshot");
         _flash.DoCameraFlash = true;
-        playerAnimator.speed = 1; //we continue the animation
+        currentAnimator.speed = 1; //we continue the animation
     }
 
     IEnumerator PauseAnimatorCoroutine(float countdown)
     {
         yield return new WaitForSeconds(countdown);
-        playerAnimator.speed = 0;
+        currentAnimator.speed = 0;
     }
 }

@@ -29,18 +29,17 @@ public class Flash : MonoBehaviour
         flashImage.color = col;
     }
 
-    // remove later this update, but instead call CameraFlash in events
-    void Update()
-    {
-        if (_doCameraFlash && !flashing)
-        {
-            CameraFlash();
-        }
-        else
-        {
-            _doCameraFlash = false;
-        }
-    }
+    //void Update()
+    //{
+    //    if (_doCameraFlash && !flashing)
+    //    {
+    //        CameraFlash();
+    //    }
+    //    else
+    //    {
+    //        _doCameraFlash = false;
+    //    }
+    //}
 
     public void CameraFlash()
     {

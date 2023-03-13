@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance = null;
 
-    public UnityEvent onPressEnter;
+    public UnityEvent onPressEnter, onPressM, onPressK;
 
     /// <summary>
     /// guarantee only one instance of this InputManager
@@ -30,6 +30,18 @@ public class InputManager : MonoBehaviour
         {
             Debug.Log("pressed enter");
             onPressEnter.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Debug.Log("changed to manaka");
+            onPressM.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Debug.Log("changed to kaguya");
+            onPressK.Invoke();
         }
     }
 }
