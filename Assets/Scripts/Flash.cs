@@ -4,6 +4,7 @@ using System.Collections;
 
 /// <summary>
 /// do the camera-like flash animation
+/// for now, commented out the flashing and doCameraFlash limitations (maybe not needed? not sure, because dont want to use update for this class)
 /// </summary>
 public class Flash : MonoBehaviour
 {
@@ -11,17 +12,17 @@ public class Flash : MonoBehaviour
     
     private Image flashImage;
     private float startTime;
-    private bool flashing = false;
+    //private bool flashing = false;
 
-    private bool _doCameraFlash = false;
+    //private bool _doCameraFlash = false;
 
-    public bool DoCameraFlash
-    {
-        get { return _doCameraFlash; }
-        set { _doCameraFlash = value; }
-    }
+    //public bool DoCameraFlash
+    //{
+    //    get { return _doCameraFlash; }
+    //    set { _doCameraFlash = value; }
+    //}
 
-    void Start()
+    private void Start()
     {
         flashImage = GetComponent<Image>();
         Color col = flashImage.color;
@@ -50,7 +51,7 @@ public class Flash : MonoBehaviour
         startTime = Time.time;
 
         // so we can flash again
-        _doCameraFlash = false;
+        //_doCameraFlash = false;
 
         // start it as alpha = 1.0 (opaque)
         col.a = 1.0f;
@@ -59,11 +60,11 @@ public class Flash : MonoBehaviour
         flashImage.color = col;
 
         // flag we are flashing so user can't do 2 of them
-        flashing = true;
+        //flashing = true;
 
         StartCoroutine(FlashCoroutine());
     }
-    IEnumerator FlashCoroutine()
+    private IEnumerator FlashCoroutine()
     {
         bool done = false;
 
@@ -83,12 +84,12 @@ public class Flash : MonoBehaviour
 
             col.a = Mathf.Lerp(1.0f, 0.0f, perc);
             flashImage.color = col;
-            flashing = true;
+            //flashing = true;
 
             yield return null;
         }
 
-        flashing = false;
+        //flashing = false;
 
         yield break;
     }
