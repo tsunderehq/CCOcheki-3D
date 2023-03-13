@@ -2,9 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
+/// <summary>
+/// do the camera-like flash animation
+/// </summary>
 public class Flash : MonoBehaviour
 {
-    public float flashTimelength = 0.2f;
+    [SerializeField] private float flashTimelength = 0.2f;
     
     private Image flashImage;
     private float startTime;
@@ -26,6 +29,7 @@ public class Flash : MonoBehaviour
         flashImage.color = col;
     }
 
+    // remove later this update, but instead call CameraFlash in events
     void Update()
     {
         if (_doCameraFlash && !flashing)

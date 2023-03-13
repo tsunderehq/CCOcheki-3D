@@ -1,13 +1,28 @@
 using UnityEngine;
+/// <summary>
+/// attach this script to the camera you want to flip
+/// </summary>
 public class FlipCamera : MonoBehaviour
 {
 
-    public Camera m_camera;
+    private Camera cam;
+
+    /// <summary>
+    /// try to flip if Camera class exists, else destroy this instance
+    /// </summary>
+    private void Start()
+    {
+        if (!TryGetComponent<Camera>(out cam))
+        {
+            Destroy(this);
+        }
+    }
+
     void OnPreCull()
     {
-        m_camera.ResetWorldToCameraMatrix();
-        m_camera.ResetProjectionMatrix();
-        m_camera.projectionMatrix = m_camera.projectionMatrix * Matrix4x4.Scale(new Vector3(-1, 1, 1));
+        cam.ResetWorldToCameraMatrix();
+        cam.ResetProjectionMatrix();
+        cam.projectionMatrix = cam.projectionMatrix * Matrix4x4.Scale(new Vector3(-1, 1, 1));
     }
 
     void OnPreRender()

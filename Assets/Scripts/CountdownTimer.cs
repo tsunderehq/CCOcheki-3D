@@ -1,10 +1,13 @@
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// A singleton used to show the countdown when taking a picture
+/// </summary>
 public class CountdownTimer : MonoBehaviour
 {
     private float currentTime = 0f;
-    private float startingTime = 6f;
+    [SerializeField] private float startingTime = 6f; // the amount of time to count down
 
     [SerializeField] TextMeshProUGUI countdownText;
 
