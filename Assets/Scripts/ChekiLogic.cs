@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// for controlling the animations logic of the avatar, and also switching between the 2 avatars
@@ -16,10 +17,10 @@ public class ChekiLogic : MonoBehaviour
 
     //UI gameobjects
     public GameObject ParentCanvas, CountTimePrefab;
+    [SerializeField] private TextMeshProUGUI avatarNameDisplay;
 
     //for returning manaka to original transform after animation
     public Transform Anim1, Anim2, Anim3, Hima;
-    private Transform initTransform;
 
     //camera flash effect
     [SerializeField] private Flash _flash;
@@ -52,8 +53,6 @@ public class ChekiLogic : MonoBehaviour
 
     private void Start()
     {
-        initTransform = ManakaAvatar.transform;
-
         manakaAnimator = ManakaAvatar.GetComponent<Animator>();
         kaguyaAnimator = KaguyaAvatar.GetComponent<Animator>();
 
@@ -79,8 +78,12 @@ public class ChekiLogic : MonoBehaviour
         KaguyaAvatar.SetActive(false);
         ManakaAvatar.SetActive(true);
 
+        ManakaAvatar.transform.SetPositionAndRotation(Anim1.position, Anim1.rotation);
+
         CurrentAvatar = ManakaAvatar;
         currentAnimator = manakaAnimator;
+
+        avatarNameDisplay.text = "Manaka";
     }
 
     public void SetKaguyaAvatar()
@@ -88,8 +91,12 @@ public class ChekiLogic : MonoBehaviour
         ManakaAvatar.SetActive(false);
         KaguyaAvatar.SetActive(true);
 
+        KaguyaAvatar.transform.SetPositionAndRotation(Anim1.position, Anim1.rotation);
+
         CurrentAvatar = KaguyaAvatar;
         currentAnimator = kaguyaAnimator;
+
+        avatarNameDisplay.text = "Kaguya";
     }
 
     public void PlayThroughAllAnimations()
