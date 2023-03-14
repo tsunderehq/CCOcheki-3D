@@ -9,8 +9,8 @@ using System.Collections;
 public class Flash : MonoBehaviour
 {
     [SerializeField] private float flashTimelength = 0.2f;
-    
-    private Image flashImage;
+
+    [SerializeField] private Image flashImage;
     private float startTime;
     //private bool flashing = false;
 
@@ -24,7 +24,7 @@ public class Flash : MonoBehaviour
 
     private void Start()
     {
-        flashImage = GetComponent<Image>();
+        //flashImage = GetComponent<Image>();
         Color col = flashImage.color;
         col.a = 0.0f;
         flashImage.color = col;

@@ -21,7 +21,7 @@ public class ChekiLogic : MonoBehaviour
     public Transform Anim1, Anim2, Anim3, Hima;
 
     //camera flash effect
-    private Flash _flash;
+    [SerializeField] private Flash _flash;
 
     //for switching between Manaka and Kaguya
     [SerializeField] private GameObject ManakaAvatar, KaguyaAvatar;
@@ -56,8 +56,6 @@ public class ChekiLogic : MonoBehaviour
 
         SetManakaAvatar(); // set starting avatar as manaka
         ChangeState(AnimationState.Finished);
-
-        _flash = FindObjectOfType<Flash>();
     }
 
     //private void Update()
@@ -181,11 +179,15 @@ public class ChekiLogic : MonoBehaviour
         //countdownStarted = false;
         Texture2D screenshotData = screenshot.CaptureRenderTexture(mainCamera, 0);
         screenshotData.Apply();
+
         Destroy(cdTimerInstance);
+
         ScreenshotAnimator.texture = (Texture)screenshotData;
-        
         screenShotAnimator.SetTrigger("Screenshot");
+
+        if (!_flash.gameObject.activeInHierarchy) _flash.gameObject.SetActive(true);
         _flash.CameraFlash();
+
         currentAnimator.speed = 1; //we continue the animation
     }
 
