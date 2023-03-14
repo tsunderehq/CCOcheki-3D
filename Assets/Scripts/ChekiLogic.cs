@@ -19,6 +19,7 @@ public class ChekiLogic : MonoBehaviour
 
     //for returning manaka to original transform after animation
     public Transform Anim1, Anim2, Anim3, Hima;
+    private Transform initTransform;
 
     //camera flash effect
     [SerializeField] private Flash _flash;
@@ -51,6 +52,8 @@ public class ChekiLogic : MonoBehaviour
 
     private void Start()
     {
+        initTransform = ManakaAvatar.transform;
+
         manakaAnimator = ManakaAvatar.GetComponent<Animator>();
         kaguyaAnimator = KaguyaAvatar.GetComponent<Animator>();
 
@@ -58,37 +61,12 @@ public class ChekiLogic : MonoBehaviour
         ChangeState(AnimationState.Finished);
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Alpha0)) currentAnimator.Play("Waiting");
-    //    if (Input.GetKeyDown(KeyCode.Alpha9)) currentAnimator.Play("Idle");
-
-    //    // reset the Waiting start transform every finished loop
-    //    if (currentAnimator.GetCurrentAnimatorStateInfo(0).IsName("Waiting"))
-    //    {
-    //        CurrentAvatar.transform.position = Hima.position;
-    //        CurrentAvatar.transform.rotation = Hima.rotation;
-
-    //        // randomize between the two hima animations
-    //        if (Random.value > 0.5f) currentAnimator.SetBool("Hima", true);
-    //        else currentAnimator.SetBool("Hima", false);
-    //    }
-
-    //    // wait for trigger cheki animation
-    //    if (currentAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-    //    {
-    //        //dont interrupt when in cheki animation
-    //        if (currentAnimator.IsInTransition(0)) return;
-
-    //        //press 1, 2, or 3 to trigger cheki animations
-    //        if (Input.GetKeyDown(KeyCode.Alpha1)) DoBigHeartAnimation();
-    //        if (Input.GetKeyDown(KeyCode.Alpha2)) DoSmallHeartAnimation();
-    //        if (Input.GetKeyDown(KeyCode.Alpha3)) DoNyanAnimation();
-    //    }
-
-    //    //start countdown if 4 is pressed
-    //    if (!countdownStarted && Input.GetKeyDown(KeyCode.Alpha4)) StartCountDown();
-    //}
+    public void InterruptAnimationAndReset()
+    {
+        StopAllCoroutines();
+        ChangeState(AnimationState.Finished);
+        Debug.Log("interrupted");
+    }
 
     public void SwitchAvatar()
     {
@@ -124,23 +102,6 @@ public class ChekiLogic : MonoBehaviour
         AnimState += 1;
     }
 
-
-
-    //private void SetWaiting(bool isWaiting)
-    //{
-    //    if (isWaiting)
-    //    {
-    //        CurrentAvatar.transform.position = Hima.position;
-    //        CurrentAvatar.transform.rotation = Hima.rotation;
-    //        currentAnimator.Play("Waiting");
-    //    }
-    //    else
-    //    {
-    //        CurrentAvatar.transform.position = Anim1.position;
-    //        CurrentAvatar.transform.rotation = Anim1.rotation;
-    //        currentAnimator.Play("Idle");
-    //    }
-    //}
 
     private void DoBigHeartAnimation()
     {

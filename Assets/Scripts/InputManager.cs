@@ -30,19 +30,19 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        // do not receive any inputs until it finishes all the animations
-        if (_chekiLogic.AnimState != ChekiLogic.AnimationState.Finished) return;
+        // the button to interrupt
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            onPressA.Invoke();
+        }
 
+        // for the buttons below, do not receive any inputs until it finishes all the animations
+        if (_chekiLogic.AnimState != ChekiLogic.AnimationState.Finished) return;
 
         // define below which keys to bind the events
         if (Input.GetKeyDown(KeyCode.N))
         {
             onPressN.Invoke();
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            onPressA.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.I))
