@@ -34,8 +34,8 @@ namespace ScreenshotCompanionFramework
 		// capturing
 		public ScreenshotCompanion.CaptureMethod captureMethod;
         public bool singleCamera = false;
-        public float renderSizeMultiplier = 1f;
-        public int captureSizeMultiplier = 1;
+        public float renderSizeMultiplier = 2f;
+        public int captureSizeMultiplier = 2;
         public Vector2 cutoutPosition;
         public Vector2 cutoutSize; 
     }

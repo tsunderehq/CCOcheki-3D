@@ -35,6 +35,7 @@ public class ChekiLogic : MonoBehaviour
     private const float bigHeartStopTime = 5.8f;
     private const float nyanStopTime = 6.5f;
 
+    private GameObject cdTimerInstance;
     public enum AnimationState
     {
         AnimatingBigHeart, AnimatingSmallHeart, AnimatingNyan, Finished
@@ -170,8 +171,9 @@ public class ChekiLogic : MonoBehaviour
     private void StartCountDown()
     {
         //countdownStarted = true;
-        GameObject cdTimerInstance = Instantiate(CountTimePrefab) as GameObject;
+        cdTimerInstance = Instantiate(CountTimePrefab) as GameObject;
         cdTimerInstance.transform.SetParent(ParentCanvas.transform, false);
+        cdTimerInstance.transform.localPosition = new Vector3(626f, 1286f, 0f);
     }
 
     public void CountDownEnd()
@@ -179,6 +181,7 @@ public class ChekiLogic : MonoBehaviour
         //countdownStarted = false;
         Texture2D screenshotData = screenshot.CaptureRenderTexture(mainCamera, 0);
         screenshotData.Apply();
+        Destroy(cdTimerInstance);
         ScreenshotAnimator.texture = (Texture)screenshotData;
         
         screenShotAnimator.SetTrigger("Screenshot");
