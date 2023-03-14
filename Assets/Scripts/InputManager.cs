@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance = null;
 
-    public UnityEvent onPressEnter, onPressM, onPressK;
+    public UnityEvent onPressN, onPressA, onPressI;
 
     private ChekiLogic _chekiLogic;
 
@@ -35,22 +35,19 @@ public class InputManager : MonoBehaviour
 
 
         // define below which keys to bind the events
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.N))
         {
-            Debug.Log("pressed enter");
-            onPressEnter.Invoke();
+            onPressN.Invoke();
         }
 
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("changed to manaka");
-            onPressM.Invoke();
+            onPressA.Invoke();
         }
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            Debug.Log("changed to kaguya");
-            onPressK.Invoke();
+            onPressI.Invoke();
         }
     }
 }

@@ -90,6 +90,12 @@ public class ChekiLogic : MonoBehaviour
     //    if (!countdownStarted && Input.GetKeyDown(KeyCode.Alpha4)) StartCountDown();
     //}
 
+    public void SwitchAvatar()
+    {
+        if (KaguyaAvatar.activeInHierarchy) SetManakaAvatar();
+        else SetKaguyaAvatar();
+    }
+
     public void SetManakaAvatar()
     {
         KaguyaAvatar.SetActive(false);
