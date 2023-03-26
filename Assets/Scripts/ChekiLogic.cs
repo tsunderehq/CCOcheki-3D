@@ -85,6 +85,8 @@ public class ChekiLogic : MonoBehaviour
     {
         StopAllCoroutines();
         ChangeState(AnimationState.Finished);
+        currentAnimator.SetTrigger("Reset");
+        audioSource.Stop();
         Debug.Log("interrupted");
     }
 
