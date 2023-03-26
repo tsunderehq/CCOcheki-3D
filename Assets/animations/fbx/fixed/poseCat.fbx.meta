@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: -8014346048076231834
-    second: fixed_nyan
+    second: nyan-fixed
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,7 +36,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: fixed_nyan
+      name: nyan-fixed
       takeName: Character1_Reference|Character1_Reference|clip|Base_Layer
       internalID: 0
       firstFrame: 0
@@ -572,23 +572,23 @@ ModelImporter:
     - name: Character1_RightUpLeg
       parentName: Character1_Hips
       position: {x: 0.08099995, y: -0.000000042077154, z: -0.000000006854534}
-      rotation: {x: 1, y: -3.885674e-10, z: -0.000000076951814, w: 2.0026596e-14}
-      scale: {x: 1, y: 1.0000004, z: 1.0000005}
+      rotation: {x: 1, y: -7.4161477e-10, z: -0.000000076951814, w: -0.0000000011368626}
+      scale: {x: 1, y: 1.0000002, z: 1.0000006}
     - name: Character1_RightLeg
       parentName: Character1_RightUpLeg
       position: {x: -0.0000000488176, y: 0.43199983, z: -0.00000017438083}
-      rotation: {x: 0.000000009094949, y: 0.00000003140605, z: -0.0000000018984785, w: 1}
+      rotation: {x: 0.00000000795808, y: 0.0000000316192, z: -0.000000001834082, w: 1}
       scale: {x: 0.9999999, y: 1.0000008, z: 1.000001}
     - name: Character1_RightFoot
       parentName: Character1_RightLeg
       position: {x: 0.0006255534, y: 0.43299937, z: -0.00000010056421}
-      rotation: {x: -0.7071067, y: -0.00002961188, z: -0.000029589492, w: 0.7071068}
-      scale: {x: 1, y: 1.0000002, z: 1.0000001}
+      rotation: {x: -0.7071067, y: -0.000029608513, z: -0.000029586734, w: 0.7071068}
+      scale: {x: 1, y: 1.0000004, z: 1.0000002}
     - name: Character1_RightToeBase
       parentName: Character1_RightFoot
       position: {x: -0.000011053061, y: 0.13152097, z: 0.06231242}
-      rotation: {x: 0.000025361776, y: 1.3096724e-10, z: 3.637979e-12, w: 1}
-      scale: {x: 1, y: 1.0000004, z: 1.0000004}
+      rotation: {x: 0.000025361776, y: 1.7826096e-10, z: -0.0000000045401976, w: 1}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
     - name: Character1_RightToeBase_end
       parentName: Character1_RightToeBase
       position: {x: -0, y: 0.14553557, z: 0}

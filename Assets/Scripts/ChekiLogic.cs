@@ -22,7 +22,13 @@ public class ChekiLogic : MonoBehaviour
     //UI gameobjects
     public GameObject ParentCanvas, CountTimePrefab;
     [SerializeField] private TextMeshProUGUI avatarNameDisplay;
+    [SerializeField] private TextMeshProUGUI animationNameDisplay;
 
+    [Header("Texts")]
+    [SerializeField] private string stanby_text = "";
+    [SerializeField] private string bigHeart_text = "";
+    [SerializeField] private string smallHeart_text = "";
+    [SerializeField] private string neko_text = "";
 
     [Header("Animations")]
     //for returning manaka to original transform after animation
@@ -54,7 +60,7 @@ public class ChekiLogic : MonoBehaviour
     private const float smallHeartCountdownEndTime = 9.1f;
     private const float smallHeartTotalAnimationTime = 16.7f;
 
-    private const float nyanCountdownEndTime = 8.8f;
+    private const float nyanCountdownEndTime = 8.5f;
     private const float nyanTotalAnimationTime = 13.23f;
 
     private GameObject cdTimerInstance;
@@ -76,7 +82,7 @@ public class ChekiLogic : MonoBehaviour
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
         manakaAnimator = ManakaAvatar.GetComponent<Animator>();
         kaguyaAnimator = KaguyaAvatar.GetComponent<Animator>();
-
+        animationNameDisplay.text = stanby_text;
         SetManakaAvatar(); // set starting avatar as manaka
         ChangeState(AnimationState.Finished);
     }
@@ -252,6 +258,7 @@ public class ChekiLogic : MonoBehaviour
         while (!currentAnimator.GetCurrentAnimatorStateInfo(0).IsName("BigHeart")) yield return null;
 
         //play big heart animation
+        animationNameDisplay.text = bigHeart_text;
         Debug.Log("doing big heart animation");
         StartCoroutine(StartCountdownAfterDelay(bigHeartCountdownEndTime - 3f));
 
@@ -259,12 +266,14 @@ public class ChekiLogic : MonoBehaviour
 
         //play small heart animation
         Debug.Log("doing small heart animation");
+        animationNameDisplay.text = smallHeart_text;
         StartCoroutine(StartCountdownAfterDelay(smallHeartCountdownEndTime - 3f));
         while (!currentAnimator.GetCurrentAnimatorStateInfo(0).IsName("Nyan")) yield return null;
 
         //play nyan animation
         Debug.Log("doing nyan animation");
-        
+
+        animationNameDisplay.text = neko_text;
         StartCoroutine(StartCountdownAfterDelay(nyanCountdownEndTime - 3f));
         while (!currentAnimator.GetCurrentAnimatorStateInfo(0).IsName("Outro")) yield return null;
 
@@ -273,6 +282,7 @@ public class ChekiLogic : MonoBehaviour
         //outro sound
         audioSource.clip = aclip_outro;
         audioSource.Play();
+        animationNameDisplay.text = stanby_text;
     }
 
 }
