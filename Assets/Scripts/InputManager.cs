@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance = null;
 
-    public UnityEvent onPressN, onPressA, onPressI;
+    public UnityEvent onPressN, onPressA, onPressI, onPressEnter;
 
     private ChekiLogic _chekiLogic;
 
@@ -48,6 +48,10 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             onPressI.Invoke();
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            onPressEnter.Invoke();
         }
     }
 }

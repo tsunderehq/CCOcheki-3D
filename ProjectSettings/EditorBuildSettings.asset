@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/CCOcheki.unity
+    guid: a513bba15e6e1d34dae8c4fec3928c88
   m_configObjects: {}
